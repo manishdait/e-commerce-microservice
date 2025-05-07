@@ -1,0 +1,45 @@
+services:
+  postgres:
+    container_name: postgres_db
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - microservice-net
+    restart: unless-stopped
+
+  mongo:
+    container_name: mongo_db
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongo
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo:/data
+    ports:
+      - 27017:27017
+    networks:
+      - microservice-net
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: mail_dev
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+    
+
+networks:
+  microservice-net:
+    driver: bridge
+
+volumes:
+  postgres: {}
+  mongo: {}
+  
