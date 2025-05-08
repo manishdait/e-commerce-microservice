@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/order
+    username: postgres
+    password: password
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: orderConfirmation:com.example.order.kafka.OrderConfirmation
+
+server:
+  port: 8083
+
+application:
+  config:
+    customer-url: http://localhost:8081/api/v1/customers
+    product-url: http://localhost:8082/api/v1/products
