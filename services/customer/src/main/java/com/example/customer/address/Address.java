@@ -16,6 +16,6 @@ import lombok.Setter;
 @Validated
 public class Address {
   private String street;
-  private String houseNUmber;
+  private String houseNumber;
   private String zipCode;
 }
