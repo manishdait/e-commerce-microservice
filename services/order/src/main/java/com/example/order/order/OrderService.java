@@ -15,12 +15,13 @@ import com.example.order.product.ProductClient;
 import com.example.order.product.PurchaseRequest;
 import com.example.order.product.PurchaseResponse;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-  private final OrderRepository orderRepository;
+  private final OrderRepository repository;
   private final OrderMapper mapper;
 
   private final CustomerClient customerClient;
@@ -37,7 +38,7 @@ public class OrderService {
     List<PurchaseResponse> purchaseProduct = productClient.purchasedProduct(request.products());
 
     Order order = mapper.toOrder(request);
-    orderRepository.save(order);
+    repository.save(order);
 
     for (PurchaseRequest purchaseRequest : request.products()) {
       orderLineService.saveOrderLine(new OrderLineRequest(
@@ -61,5 +62,19 @@ public class OrderService {
     );
 
     return order.getId();
+  }
+
+  public List<OrderResponse> getAllOrders() {
+    return repository.findAll().stream()
+      .map(o -> mapper.toOrderResponse(o))
+      .toList();
+  }
+
+  public OrderResponse getOrderById(Long orderId) {
+    Order order = repository.findById(orderId).orElseThrow(
+      () -> new EntityNotFoundException("Order not found")
+    );
+    
+    return mapper.toOrderResponse(order);
   }
 }
