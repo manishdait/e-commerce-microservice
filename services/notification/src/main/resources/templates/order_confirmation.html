@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .order-details {
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        .product-list {
+            margin-top: 20px;
+            padding: 0;
+            list-style: none;
+        }
+        .product-list li {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .product-list li:last-child {
+            border-bottom: none;
+        }
+        .total-amount {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: right;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+        }
+        .button {
+          display: inline-block;
+          padding: 10px 20px;
+          background-color: #4CAF50;
+          color: white;
+          text-decoration: none;
+          border-radius: 5px;
+          margin-top: 20px;
+          text-align: center;
+        }
+        .button:hover {
+          background-color: #367c39;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Confirmation</h1>
+        <p>Dear <span th:text="${customerName}"></span>,</p>
+        <p>Thank you for your order!  We are pleased to confirm your purchase with the following details:</p>
+
+        <div class="order-details">
+            <p><strong>Order Reference:</strong> <span th:text="${orderReference}"></span></p>
+            <p><strong>Amount:</strong> <span th:text="${amount}"></span></p>
+
+            <h3>Products:</h3>
+            <ul class="product-list">
+                <li th:each="product : ${products}">
+                    <span th:text="${product.name}"></span> -
+                    <span th:text="${product.quantity}"></span> x
+                    <span th:text="${product.price}"></span>
+                </li>
+            </ul>
+            <p class="total-amount">Total: <span th:text="${amount}"></span></p>
+        </div>
+        <a href="#" class="button">View your order</a>
+        <p class="footer">
+            If you have any questions, please contact us at support@example.com.
+        </p>
+    </div>
+</body>
+</html>
